@@ -1,21 +1,16 @@
 package DAO.implementations;
 
+import DAO.implementation.DecorationDAOImpl;
 import DAO.interfaces.DecorationDAO;
-import DAO.interfaces.EscapeRoomDAO;
-import DAO.interfaces.RoomDAO;
-import classes.EscapeRoom;
-import classes.Room;
-import classes.enums.Level;
-import classes.enums.Material;
-import classes.item.ItemFactory;
-import classes.item.implementations.Decoration;
-import classes.item.implementations.ItemFactoryImpl;
-import connections.attribute.Attribute;
+import exception.CallFailedException;
+import model.enums.Material;
+import model.item.ItemFactory;
+import model.item.implementations.Decoration;
+import model.item.implementations.ItemFactoryImpl;
+import connection.attribute.Attribute;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DecorationDAOImplTest {
 
@@ -36,19 +31,27 @@ class DecorationDAOImplTest {
 
     @Test
     void givenDecorationDAO_whenAddDecoration_ThenQueryAttributesAsExpected() {
-        decorationDAO.addDecoration(decoration, roomId);
-        Assertions.assertEquals(dbConnection.queryAttributes.size(), 5);
-        Assertions.assertEquals(dbConnection.queryAttributes.getFirst(), new Attribute<String>(this.decoration.getName(), String.class));
-        Assertions.assertEquals(dbConnection.queryAttributes.get(1), new Attribute<String>(this.decoration.getMaterial().name(), String.class));
-        Assertions.assertEquals(dbConnection.queryAttributes.get(2), new Attribute<Double>(this.decoration.getPrice(), Double.class));
-        Assertions.assertEquals(dbConnection.queryAttributes.get(3), new Attribute<Integer>(this.decoration.getQuantity(), Integer.class));
-        Assertions.assertEquals(dbConnection.queryAttributes.get(4), new Attribute<Integer>(roomId, Integer.class));
+        try {
+            decorationDAO.addDecoration(decoration, roomId);
+            Assertions.assertEquals(dbConnection.queryAttributes.size(), 5);
+            Assertions.assertEquals(dbConnection.queryAttributes.getFirst(), new Attribute<String>(this.decoration.getName(), String.class));
+            Assertions.assertEquals(dbConnection.queryAttributes.get(1), new Attribute<String>(this.decoration.getMaterial().name(), String.class));
+            Assertions.assertEquals(dbConnection.queryAttributes.get(2), new Attribute<Double>(this.decoration.getPrice(), Double.class));
+            Assertions.assertEquals(dbConnection.queryAttributes.get(3), new Attribute<Integer>(this.decoration.getQuantity(), Integer.class));
+            Assertions.assertEquals(dbConnection.queryAttributes.get(4), new Attribute<Integer>(roomId, Integer.class));
+        } catch (CallFailedException e) {
+            Assertions.fail();
+        }
     }
 
     @Test
     void givenDecorationDAO_whenAddDecoration_ThenExpectedArgumentsQuantityInQueryString() {
-        decorationDAO.addDecoration(decoration, roomId);
-        long count = dbConnection.query.chars().filter(ch -> ch == '?').count();
-        Assertions.assertEquals(dbConnection.queryAttributes.size(), count);
+        try {
+            decorationDAO.addDecoration(decoration, roomId);
+            long count = dbConnection.query.chars().filter(ch -> ch == '?').count();
+            Assertions.assertEquals(dbConnection.queryAttributes.size(), count);
+        }  catch (CallFailedException e) {
+            Assertions.fail();
+        }
     }
 }

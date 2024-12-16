@@ -1,10 +1,10 @@
 package utils;
 
-import classes.enums.Level;
-import classes.enums.Material;
-import classes.enums.Theme;
-import exceptions.IncorrectInputException;
-import exceptions.StringException;
+import model.enums.Level;
+import model.enums.Material;
+import model.enums.Theme;
+import exception.IncorrectInputException;
+import exception.StringException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -31,12 +31,8 @@ public class Entry {
         return validInput;
     }
 
-    private static Integer checkValidIntegerFromList(Integer input, List<Integer> validResults) throws IncorrectInputException {
-        if (validResults.contains(input)) {
-            return input;
-        } else {
-            throw new IncorrectInputException("Introduced value does not exist. ");
-        }
+    private static void checkValidIntegerFromList(Integer input, List<Integer> validResults) throws IncorrectInputException {
+        if (!validResults.contains(input)) throw new IncorrectInputException("Introduced value does not exist. ");
     }
 
     public static Integer readInt(String message, List<Integer> validResults) {
@@ -46,7 +42,8 @@ public class Entry {
         int validInput = 0;
         while (!isValidInput) {
             try {
-                validInput = checkValidIntegerFromList(scanner.nextInt(), validResults);
+                validInput = scanner.nextInt();
+                checkValidIntegerFromList(validInput, validResults);
                 isValidInput = true;
             } catch (InputMismatchException e) {
                 System.out.println("Format error. " + message);

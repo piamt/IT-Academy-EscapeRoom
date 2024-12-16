@@ -1,7 +1,9 @@
 package managers;
 
-import classes.Room;
-import classes.enums.Level;
+import exception.CallFailedException;
+import model.Room;
+import model.enums.Level;
+import manager.InventoryManager;
 import org.junit.jupiter.api.*;
 
 import static org.junit.Assert.assertEquals;
@@ -27,22 +29,34 @@ class InventoryManagerTest {
 
     @Test
     void givenAddRoomCalled_wheDAOCalled_ThenExpectedRoomSentToDDBB() {
-        roomDAO.success = false;
-        inventoryManager.addRoomToEscapeRoom(3);
-        Assertions.assertEquals(roomDAO.room, this.room);
+        roomDAO.success = true;
+        try {
+            inventoryManager.addRoomToEscapeRoom(3);
+            Assertions.assertEquals(roomDAO.room, this.room);
+        } catch (CallFailedException e) {
+            Assertions.fail();
+        }
     }
 
     @Test
     void givenAddRoomCalled_whenDAOResponseFailed_ThenSubscribersNotNotified() {
         roomDAO.success = false;
-        inventoryManager.addRoomToEscapeRoom(3);
-        Assertions.assertFalse(observable.notified);
+        try {
+            inventoryManager.addRoomToEscapeRoom(3);
+            Assertions.fail();
+        } catch (CallFailedException e) {
+            Assertions.assertEquals(e.getMessage(), "Room could not be created in DDBB. Failed room creation");
+        }
     }
 
     @Test
     void givenAddRoomCalled_whenDAOResponseSucceeds_ThenSubscribersGetNotified() {
         roomDAO.success = true;
-        inventoryManager.addRoomToEscapeRoom(3);
-        Assertions.assertTrue(observable.notified);
+        try {
+            inventoryManager.addRoomToEscapeRoom(3);
+            Assertions.assertTrue(observable.notified);
+        } catch (CallFailedException e) {
+            Assertions.fail();
+        }
     }
 }

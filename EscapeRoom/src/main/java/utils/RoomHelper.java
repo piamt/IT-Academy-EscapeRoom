@@ -1,6 +1,6 @@
 package utils;
 
-import classes.Room;
+import model.Room;
 
 public interface RoomHelper {
     Room createRoom();

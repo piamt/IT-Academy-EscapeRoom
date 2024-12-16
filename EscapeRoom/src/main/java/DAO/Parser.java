@@ -1,10 +1,7 @@
 package DAO;
 
-import classes.enums.Level;
-import classes.enums.Material;
-import classes.enums.Theme;
-import connections.attribute.Attribute;
-import connections.callback.ParsingCallback;
+import connection.attribute.Attribute;
+import connection.callback.ParsingCallback;
 
 import java.util.HashSet;
 

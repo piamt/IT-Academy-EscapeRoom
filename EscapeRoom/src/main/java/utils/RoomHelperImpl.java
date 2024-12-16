@@ -1,7 +1,7 @@
 package utils;
 
-import classes.Room;
-import classes.enums.Level;
+import model.Room;
+import model.enums.Level;
 
 public class RoomHelperImpl implements RoomHelper {
 

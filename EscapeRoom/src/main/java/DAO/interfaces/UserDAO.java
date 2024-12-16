@@ -1,13 +1,15 @@
 package DAO.interfaces;
 
-import classes.User;
+import exception.CallFailedException;
+import exception.DeleteUserFailedException;
+import model.User;
 
 import java.util.List;
 
 public interface UserDAO extends DAO<User>{
-    Boolean add(User user);
+    void add(User user)  throws CallFailedException;
     User getUser(Integer id);
-    Boolean updateUser(User user);
+    void updateUser(User user) throws CallFailedException;
     List<User> getUsersWithEnigma(Integer enigmaId);
-    void deleteUsersWithEnigma(Integer enigmaId);
+    void deleteUsersWithEnigma(Integer enigmaId) throws DeleteUserFailedException;
 }

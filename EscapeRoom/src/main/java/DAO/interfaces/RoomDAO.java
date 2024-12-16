@@ -1,13 +1,12 @@
 package DAO.interfaces;
 
-import classes.Room;
-import classes.item.implementations.Clue;
-import exceptions.NoRoomsException;
+import exception.CallFailedException;
+import model.Room;
 
 import java.util.List;
 
 public interface RoomDAO extends DAO<Room> {
-    Boolean addRoom(Room room, Integer escapeRoomId);
+    void addRoom(Room room, Integer escapeRoomId) throws CallFailedException;
     List<Room> getAllRoomsByEscapeRoom(Integer escapeRoomId);
     Room getRoomById(Integer roomId);
 }

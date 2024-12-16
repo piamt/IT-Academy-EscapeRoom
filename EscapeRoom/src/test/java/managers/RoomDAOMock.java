@@ -1,7 +1,8 @@
 package managers;
 
 import DAO.interfaces.RoomDAO;
-import classes.Room;
+import exception.CallFailedException;
+import model.Room;
 
 import java.util.List;
 
@@ -12,10 +13,10 @@ public class RoomDAOMock implements RoomDAO {
     Integer escapeRoomId;
 
     @Override
-    public Boolean addRoom(Room room, Integer escapeRoomId) {
+    public void addRoom(Room room, Integer escapeRoomId) throws CallFailedException {
         this.room = room;
         this.escapeRoomId = escapeRoomId;
-        return success;
+        if (!success) throw new CallFailedException("Failed room creation");
     }
 
     @Override

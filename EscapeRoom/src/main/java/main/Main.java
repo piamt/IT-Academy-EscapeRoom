@@ -1,6 +1,6 @@
 package main;
 
-import managers.MainManager;
+import manager.MainManager;
 
 
 public class Main {

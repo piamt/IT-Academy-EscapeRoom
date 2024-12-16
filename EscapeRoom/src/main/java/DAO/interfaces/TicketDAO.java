@@ -1,7 +1,9 @@
 package DAO.interfaces;
 
-import classes.Ticket;
+import exception.AddTicketFailedException;
+import exception.CallFailedException;
+import model.Ticket;
 
 public interface TicketDAO extends DAO<Ticket> {
-    void addTicket(Ticket ticket);
+    void addTicket(Ticket ticket) throws AddTicketFailedException;
 }

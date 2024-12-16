@@ -1,13 +1,14 @@
 package DAO.interfaces;
 
-import classes.User;
-import classes.item.implementations.Enigma;
+import exception.CallFailedException;
+import model.User;
+import model.item.implementations.Enigma;
 
 import java.util.List;
 
 public interface EnigmaDAO extends DAO<Enigma> {
-    Boolean addEnigma(Enigma enigma, Integer roomId);
-    void addEnigmaToUser(Integer userId, Integer enigmaId);
+    void addEnigma(Enigma enigma, Integer roomId)  throws CallFailedException;
+    void addEnigmaToUser(Integer userId, Integer enigmaId) throws CallFailedException;
     List<Enigma> getAllEnigmasByRoom(Integer roomId);
     Enigma getEnigmaById(Integer itemId);
     List<Enigma> getAllEnigmasByUser(User user);

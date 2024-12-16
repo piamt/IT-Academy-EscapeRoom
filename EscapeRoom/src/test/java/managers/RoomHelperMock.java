@@ -1,7 +1,6 @@
 package managers;
 
-import classes.Room;
-import classes.enums.Level;
+import model.Room;
 import utils.RoomHelper;
 
 public class RoomHelperMock implements RoomHelper {
